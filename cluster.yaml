@@ -1,0 +1,34 @@
+resources:
+- name: mere-mortals
+  type: container.v1.cluster
+  properties:
+    zone: us-central1-a
+    cluster:
+      description: Mere Mortal kubernetes cluster. SwampUP 2017.
+      initialClusterVersion: 1.5.7
+      nodePools:
+        - name: default-pool
+          initialNodeCount: 1
+          autoscaling:
+            enabled: true
+            minNodeCount: 1
+            maxNodeCount: 3
+          config:
+            machineType: n1-standard-1
+            diskSizeGb: 100
+            serviceAccount: default
+            oauthScopes:
+              - https://www.googleapis.com/auth/compute
+              - https://www.googleapis.com/auth/service.management.readonly
+              - https://www.googleapis.com/auth/servicecontrol
+              - https://www.googleapis.com/auth/logging.write
+              - https://www.googleapis.com/auth/monitoring
+              - https://www.googleapis.com/auth/analytics
+      loggingService: logging.googleapis.com
+      monitoringService: monitoring.googleapis.com
+      network: default
+      addonsConfig:
+          horizontalPodAutoscaling:
+            disabled: false
+          httpLoadBalancing:
+            disabled: false
